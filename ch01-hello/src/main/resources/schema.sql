@@ -6,3 +6,16 @@ create table t_user (
   create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   update_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE city_info (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  city_name VARCHAR(50) NOT NULL,
+  province_name VARCHAR(50) NOT NULL,
+  city_level VARCHAR(20) NOT NULL,
+  postal_code VARCHAR(10),
+  area_code VARCHAR(10),
+  longitude DECIMAL(10, 6),
+  latitude DECIMAL(10, 6),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
