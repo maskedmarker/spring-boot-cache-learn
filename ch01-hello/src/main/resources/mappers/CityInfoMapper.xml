@@ -16,7 +16,19 @@
         <result property="updateTime" column="update_time" />
     </resultMap>
 
+    <sql id="allFields">
+        id, city_name, city_level, province_name, postal_code, area_code, longitude, latitude, create_time, update_time
+    </sql>
     <select id="findAll" resultMap="baseResultMap">
-        SELECT id, name, email, user_status, create_time, update_time FROM t_user
+        SELECT <include refid="allFields"/> FROM city_info
+    </select>
+
+    <select id="queryByParam" resultMap="baseResultMap">
+        SELECT <include refid="allFields"/>
+        FROM city_info
+        <where>
+            <if test="id != null"> and id = #{id}</if>
+            <if test="cityName != null and cityName.length > 0"> and city_name = #{cityName}</if>
+        </where>
     </select>
 </mapper>

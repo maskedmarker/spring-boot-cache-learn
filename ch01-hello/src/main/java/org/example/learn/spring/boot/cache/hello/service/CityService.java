@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CityService {
@@ -17,19 +19,32 @@ public class CityService {
     private CityInfoMapper cityInfoMapper;
 
     public List<CityInfoDto> findAll() {
-        List<CityInfoPo> all = cityInfoMapper.findAll();
-        if (all == null) {
+        List<CityInfoPo> poList = cityInfoMapper.findAll();
+        if (poList == null) {
             return null;
         }
 
-        List<CityInfoDto> allDto = new ArrayList<>(all.size());
-        all.forEach(i -> {
+        List<CityInfoDto> dtoList = new ArrayList<>(poList.size());
+        poList.forEach(i -> {
             CityInfoDto dto = new CityInfoDto();
             BeanUtils.copyProperties(i, dto);
-            allDto.add(dto);
+            dtoList.add(dto);
         });
 
-        return allDto;
+        return dtoList;
     }
 
+    public CityInfoDto queryByCityName(String cityName) {
+        Map<String, Object> dbParam = new HashMap<>();
+        dbParam.put("cityName", cityName);
+        List<CityInfoPo> poList = cityInfoMapper.queryByParam(dbParam);
+        if (poList == null) {
+            return null;
+        }
+
+        CityInfoDto dto = new CityInfoDto();
+        BeanUtils.copyProperties(poList.get(0), dto);
+
+        return dto;
+    }
 }
